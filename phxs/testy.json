@@ -1,0 +1,52 @@
+{
+  "name": "",
+  "type" : "",
+  "static" : {
+    "status": "operational",
+    "temperature": {
+      "current": 3.5,
+      "unit": "Celsius"
+    },
+    "humidity": {
+      "current": 40,
+      "unit": "percent"
+    },
+    "door": {
+      "is_open": false
+    },
+    "contents": [
+      {
+        "item": "Milk",
+        "quantity": 2,
+        "unit": "liters"
+      },
+      {
+        "item": "Eggs",
+        "quantity": 12,
+        "unit": "pieces"
+      },
+      {
+        "item": "Vegetables",
+        "quantity": 1,
+        "unit": "bag"
+      }
+    ],
+    "power": {
+      "is_connected": true,
+      "battery_percentage": 95
+    }
+  },
+  "varies" : {
+     "power" : {
+       "path" : "power.is_connected",
+       "opts" : ["on", "off"],
+       "prob" : ["25", "75"]
+     },
+    "batery" : {
+      "path" : "power.batery_percentage",
+      "range" : [0, 100],
+      "unit" : ""
+    },
+  },
+
+}
