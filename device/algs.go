@@ -12,7 +12,7 @@ func (device *Device) ChangeAttr(path string, value any) error {
 	nestedList = append(nestedList, static)
 
 	for _, key := range paths {
-		val, exists := static[key]
+		val, exists := nestedList[len(nestedList)-1][key]
 		if !exists {
 			return errors.New("Invalid path")
 		}
@@ -26,7 +26,7 @@ func (device *Device) ChangeAttr(path string, value any) error {
 
 	if len(nestedList) > 1 {
 		for i := len(nestedList) - 1; i > 0; i-- {
-			nestedList[i-1][paths[i-1]] = nestedList[i][paths[i]]
+			nestedList[i-1][paths[i-1]] = nestedList[i]
 		}
 	}
 

@@ -29,3 +29,32 @@ func (file *File) ReadFile() (any, error) {
 	return fileContent, nil
 
 }
+
+func (file *File) WriteFile(content interface{}) error {
+
+	document, documentErr := os.OpenFile(file.Path, os.O_WRONLY|os.O_CREATE, 0644)
+	if documentErr != nil {
+		return documentErr
+	}
+
+	defer document.Close()
+
+	if err := document.Truncate(0); err != nil {
+		return err
+	}
+	if _, err := document.Seek(0, 0); err != nil {
+		return err
+	}
+
+	bytesContent, bytesContentError := json.Marshal(content)
+
+	if bytesContentError != nil {
+		return bytesContentError
+	}
+
+	if _, writeError := document.WriteString(string(bytesContent)); writeError != nil {
+		return writeError
+	}
+
+	return nil
+}
