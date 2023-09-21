@@ -3,7 +3,7 @@ package device
 type VariedOptions struct {
 	Path  string        `json:"path"`
 	Opts  []interface{} `json:"opts"`
-	Probs []interface{} `json:"probs"`
+	Probs []string      `json:"probs"`
 }
 
 type VariedRange struct {

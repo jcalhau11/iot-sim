@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	device "github.com/jcalhau11/iot-sim/device"
+	dev "github.com/jcalhau11/iot-sim/device"
 	"github.com/jcalhau11/iot-sim/oven"
 )
 
@@ -15,22 +15,23 @@ func main() {
 
 	jsonSt, _ := json.Marshal(fileInterface)
 
-	var device device.Device
+	var device dev.Device
 
 	err := json.Unmarshal(jsonSt, &device)
 
-	if err != nil {
-		fmt.Println(err)
-	}
+	fmt.Println(err)
+
+	var opts []interface{}
+
+	opts = append(opts, "on")
+	opts = append(opts, "off")
+
+	device.ForceOptions(dev.VariedOptions{
+		Path:  "power.is_connected",
+		Opts:  opts,
+		Probs: []string{"25", "75"},
+	})
+
 	fmt.Println(device)
 
-	writeError := device.ChangeAttr("humidity.c.d", "changed")
-
-	errF := file.WriteFile(device)
-
-	fmt.Println(errF)
-
-	fmt.Println(writeError)
-
-	fmt.Println(device)
 }

@@ -55,8 +55,8 @@
       ],
       "path":"power.is_connected",
       "prob":[
-        "25",
-        "75"
+        "5",
+        "95"
       ]
     }
   }
