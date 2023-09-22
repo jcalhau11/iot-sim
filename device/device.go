@@ -33,8 +33,7 @@ func (device *Device) UpdateAttribute(path string, value any) error {
 	return device.ChangeAttr(path, value)
 }
 
-// will need to return topic information, to post message, for now it only overides the file
-func (device *Device) ForceOptions(variation VariedOptions) error {
+func (variation VariedOptions) Force(device *Device) error {
 
 	optionsProbailityMx := make(map[interface{}]int)
 	var selectedKey interface{}
@@ -63,6 +62,27 @@ func (device *Device) ForceOptions(variation VariedOptions) error {
 	}
 
 	device.ChangeAttr(variation.Path, selectedKey)
+
+	return nil
+
+}
+
+func (variedRange VariedRange) Force(device *Device) error {
+	max := variedRange.Range[1]
+	min := variedRange.Range[0]
+
+	rand.NewSource(time.Now().UnixNano())
+	selecteRange := rand.Intn(max-min) + min
+
+	err := device.ChangeAttr(variedRange.Path, selecteRange)
+
+	return err
+}
+
+func (device *Device) Telemetry() error {
+	for _, action := range device.Varies {
+		action.Force(device)
+	}
 
 	return nil
 

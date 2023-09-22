@@ -39,25 +39,27 @@
       "unit":"Celsius"
     }
   },
-  "varies":{
-    "batery":{
-      "path":"power.batery_percentage",
+  "varies":[
+    {
+      "type" : "variedRange",
+      "path":"power.battery_percentage",
       "range":[
         0,
         100
       ],
       "unit":""
     },
-    "power":{
+    {
+      "type" : "variedOptions",
       "opts":[
         "on",
         "off"
       ],
       "path":"power.is_connected",
-      "prob":[
+      "probs":[
         "5",
         "95"
       ]
     }
-  }
+  ]
 }

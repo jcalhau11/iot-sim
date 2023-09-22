@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	dev "github.com/jcalhau11/iot-sim/device"
 	"github.com/jcalhau11/iot-sim/oven"
 )
 
@@ -11,27 +10,16 @@ func main() {
 
 	file := &oven.File{Path: "phxs/testy.json"}
 
-	fileInterface, _ := file.ReadFile()
+	comp, compErro := file.ReloadDevice()
 
-	jsonSt, _ := json.Marshal(fileInterface)
+	fmt.Println(compErro)
 
-	var device dev.Device
+	fmt.Println(comp)
 
-	err := json.Unmarshal(jsonSt, &device)
+	comp.Telemetry()
 
-	fmt.Println(err)
+	t, _ := json.Marshal(comp.Static)
 
-	var opts []interface{}
-
-	opts = append(opts, "on")
-	opts = append(opts, "off")
-
-	device.ForceOptions(dev.VariedOptions{
-		Path:  "power.is_connected",
-		Opts:  opts,
-		Probs: []string{"25", "75"},
-	})
-
-	fmt.Println(device)
+	fmt.Println(string(t))
 
 }
