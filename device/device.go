@@ -81,7 +81,9 @@ func (variedRange VariedRange) Force(device *Device) error {
 
 func (device *Device) Telemetry() error {
 	for _, action := range device.Varies {
-		action.Force(device)
+		if err := action.Force(device); err != nil {
+			return err
+		}
 	}
 
 	return nil
